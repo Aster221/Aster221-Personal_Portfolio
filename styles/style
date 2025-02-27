@@ -1,0 +1,69 @@
+/* 基础样式 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #1a1a1a;
+    color: #fff;
+}
+
+nav {
+    background: #333;
+    padding: 1rem;
+    position: sticky;
+    top: 0;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* 模块标题 */
+h1, h2 {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+/* 作品集画廊 */
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1rem;
+    padding: 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.gallery img, .gallery video {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.gallery img:hover {
+    transform: scale(1.02);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* 页脚 */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: #333;
+}
