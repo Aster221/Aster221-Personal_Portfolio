@@ -10,9 +10,9 @@
     <!-- 导航栏 -->
     <nav>
         <ul>
-            <li><a href="#uescene">UE地编场景</a></li>
-            <li><a href="#modeling">建模展示</a></li>
-            <li><a href="#houdini">Houdini程序化生成</a></li>
+            <li><a href="#uescene">UE地编</a></li>
+            <li><a href="#modeling">建模</a></li>
+            <li><a href="#houdini">Houdini</a></li>
             <li><a href="#rendering">UE渲染</a></li>
         </ul>
     </nav>
@@ -26,51 +26,89 @@
     <section id="uescene" class="portfolio-section">
         <h2>Unreal Engine 地编场景</h2>
         <div class="gallery">
-            <img src="assets/uescene/魔幻.png" alt="魔幻场景截图">
-            <img src="assets/uescene/机甲.png" alt="机甲布局展示">
-            <video controls>
+            <img src="assets/uescene/魔幻.png" alt="魔幻场景" loading="lazy">
+            <img src="assets/uescene/机甲.png" alt="机甲布局" loading="lazy">
+            
+             <video controls>
                 <source src="assets/uescene/scene-walkthrough.mp4" type="video/mp4">
-                浏览器不支持视频播放
             </video>
         </div>
+        
+        <div class="gallery-more">
+            <img data-src="assets/uescene/卡通城堡.png" alt="场景细节" loading="lazy">
+            <img data-src="assets/uescene/2.png" alt="场景细节" loading="lazy">
+            
+        </div>
+        <button class="more-btn" data-target="uescene">More</button>
     </section>
 
     <!-- 建模展示 -->
     <section id="modeling" class="portfolio-section">
         <h2>3D建模作品</h2>
         <div class="gallery">
-            <img src="assets/modeling/character.jpg" alt="角色模型拓扑">
-            <img src="assets/modeling/weapon.jpg" alt="武器高模展示">
+            <img src="assets/modeling/character.jpg" alt="角色模型" loading="lazy">
+            <img src="assets/modeling/weapon.jpg" alt="武器模型" loading="lazy">
         </div>
+        <div class="gallery-more">
+            <img data-src="assets/modeling/prop01.jpg" alt="道具模型" loading="lazy">
+        </div>
+        <button class="more-btn" data-target="modeling">More</button>
     </section>
 
     <!-- Houdini程序化生成 -->
     <section id="houdini" class="portfolio-section">
         <h2>Houdini程序化内容</h2>
         <div class="gallery">
-            <img src="assets/houdini/terrain-gen.jpg" alt="程序化地形生成">
+            <img src="assets/houdini/terrain-gen.jpg" alt="地形生成" loading="lazy">
+        </div>
+        <div class="gallery-more">
             <video controls>
                 <source src="assets/houdini/fx-simulation.mp4" type="video/mp4">
-                浏览器不支持视频播放
             </video>
         </div>
+        <button class="more-btn" data-target="houdini">More</button>
     </section>
 
     <!-- UE渲染 -->
     <section id="rendering" class="portfolio-section">
         <h2>Unreal Engine 渲染技术</h2>
         <div class="gallery">
-            <img src="assets/rendering/lighting.jpg" alt="动态光照效果">
+            <img src="assets/rendering/lighting.jpg" alt="动态光照" loading="lazy">
+        </div>
+        <div class="gallery-more">
             <video controls>
                 <source src="assets/rendering/material-demo.mp4" type="video/mp4">
-                浏览器不支持视频播放
             </video>
         </div>
+        <button class="more-btn" data-target="rendering">More</button>
     </section>
 
     <!-- 页脚 -->
     <footer>
         <p>© 2024 Technical Artist. Hosted on GitHub Pages.</p>
     </footer>
+
+    <script>
+        document.querySelectorAll('.more-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const target = this.getAttribute('data-target');
+                const moreSection = this.previousElementSibling;
+                const isHidden = moreSection.style.display === 'none' || !moreSection.style.display;
+
+                // 切换显示/隐藏
+                moreSection.style.display = isHidden ? 'grid' : 'none';
+                this.textContent = isHidden ? 'Less' : 'More';
+
+                // 懒加载图片（替换 data-src 到 src）
+                if (isHidden) {
+                    const lazyImages = moreSection.querySelectorAll('img[data-src]');
+                    lazyImages.forEach(img => {
+                        img.src = img.dataset.src;
+                        img.removeAttribute('data-src');
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
