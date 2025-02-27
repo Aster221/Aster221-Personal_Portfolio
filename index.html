@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <!-- 导航栏 -->
     <nav>
         <ul>
             <li><a href="#uescene">UE地编</a></li>
@@ -17,7 +16,6 @@
         </ul>
     </nav>
 
-    <!-- 主标题 -->
     <header>
         <h1>TECHNICAL ART PORTFOLIO</h1>
     </header>
@@ -37,7 +35,7 @@
         <div class="gallery-more">
             <img data-src="assets/uescene/卡通城堡.png" alt="场景细节" loading="lazy">
             <img data-src="assets/uescene/2.png" alt="场景细节" loading="lazy">
-            
+           
         </div>
         <button class="more-btn" data-target="uescene">More</button>
     </section>
@@ -83,7 +81,6 @@
         <button class="more-btn" data-target="rendering">More</button>
     </section>
 
-    <!-- 页脚 -->
     <footer>
         <p>© 2024 Technical Artist. Hosted on GitHub Pages.</p>
     </footer>
@@ -91,16 +88,15 @@
     <script>
         document.querySelectorAll('.more-btn').forEach(button => {
             button.addEventListener('click', function() {
-                const target = this.getAttribute('data-target');
                 const moreSection = this.previousElementSibling;
-                const isHidden = moreSection.style.display === 'none' || !moreSection.style.display;
-
-                // 切换显示/隐藏
-                moreSection.style.display = isHidden ? 'grid' : 'none';
-                this.textContent = isHidden ? 'Less' : 'More';
-
-                // 懒加载图片（替换 data-src 到 src）
-                if (isHidden) {
+                const isActive = moreSection.classList.contains('active');
+                
+                // 切换状态
+                moreSection.classList.toggle('active');
+                this.textContent = isActive ? 'More' : 'Less';
+                
+                // 懒加载
+                if (!isActive) {
                     const lazyImages = moreSection.querySelectorAll('img[data-src]');
                     lazyImages.forEach(img => {
                         img.src = img.dataset.src;
