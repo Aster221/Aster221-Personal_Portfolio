@@ -1,44 +1,66 @@
 /* 基础样式 */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, sans-serif;
     margin: 0;
     padding: 0;
-    background: #1a1a1a;
-    color: #fff;
+    background: #2d2d2d;
+    color: #e0e0e0;
 }
 
 nav {
-    background: #333;
+    background: rgba(0,0,0,0.8);
     padding: 1rem;
     position: sticky;
     top: 0;
+    backdrop-filter: blur(10px);
 }
 
 nav ul {
     list-style: none;
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 3rem;
+    margin: 0;
+    padding: 0;
 }
 
 nav a {
     color: #fff;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
+    transition: color 0.3s;
 }
 
-/* 模块标题 */
+nav a:hover {
+    color: #00b4d8;
+}
+
+/* 内容区域 */
+.portfolio-section {
+    padding: 4rem 2rem;
+}
+
 h1, h2 {
     text-align: center;
-    padding: 2rem 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
 
-/* 作品集画廊 */
+h1 {
+    font-size: 3rem;
+    margin: 2rem 0;
+}
+
+h2 {
+    color: #00b4d8;
+    margin-bottom: 3rem;
+}
+
+/* 画廊布局 */
 .gallery {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 1rem;
-    padding: 1rem;
+    gap: 2rem;
     max-width: 1200px;
     margin: 0 auto;
 }
@@ -47,11 +69,16 @@ h1, h2 {
     width: 100%;
     height: auto;
     border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     transition: transform 0.3s;
 }
 
 .gallery img:hover {
-    transform: scale(1.02);
+    transform: translateY(-5px);
+}
+
+video {
+    background: #000;
 }
 
 /* 响应式设计 */
@@ -59,11 +86,15 @@ h1, h2 {
     .gallery {
         grid-template-columns: 1fr;
     }
+    
+    h1 {
+        font-size: 2rem;
+    }
 }
 
 /* 页脚 */
 footer {
     text-align: center;
     padding: 2rem;
-    background: #333;
+    background: #1a1a1a;
 }
