@@ -132,3 +132,27 @@ footer {
     padding: 2rem;
     background: #333;
 }
+
+/* 子区块标题 */
+.subsection h3 {
+    color: #7fd1ff;
+    margin: 2rem 0 1rem;
+    font-size: 1.5rem;
+    border-left: 4px solid #00b4d8;
+    padding-left: 1rem;
+}
+
+/* 图片/视频区块间隔 */
+.subsection {
+    margin-bottom: 3rem;
+}
+
+/* 视频容器统一宽高比例 */
+.gallery video {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 16/9; /* 保持 16:9 比例 */
+}
+
+
+
