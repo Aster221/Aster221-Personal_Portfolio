@@ -4,152 +4,546 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Technical Art Portfolio</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+    :root {
+        --primary: #00e1ff;
+        --secondary: #0096c7;
+        --bg-dark: #0a0a12;
+        --text-light: #f0f0f0;
+    }
+
+    body {
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: var(--bg-dark);
+        color: var(--text-light);
+        line-height: 1;			
+    }
+
+    nav {
+        background: rgba(0,0,0,0.95);
+        padding: 1.2rem;
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    nav ul {
+        list-style: none;
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin: 0;
+        padding: 0;
+    }
+
+    nav a {
+        color: #fff;
+        text-decoration: none;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    nav a:hover {
+        color: var(--primary);
+    }
+
+    header {
+        text-align: center;
+        padding: 4rem 2rem 2rem;
+        background: linear-gradient(45deg, #001219, #001a25);
+    }
+
+    h1 {
+        font-size: 3rem;
+        margin: 0.5rem 0;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    h2 {
+        text-align: center;
+        color: var(--primary);
+        margin: 2rem 0 1rem;
+        font-size: 2.2rem;
+        position: relative;
+        padding-bottom: 1rem;
+    }
+
+    h2::after {
+        content: '';
+        position: absolute;
+        bottom: -0.3rem;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 2px;
+        background: var(--primary);
+	transition: all 0.3s;
+    }
+
+    .portfolio-section {
+        padding: 1rem 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+
+    .gallery, .gallery-more {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+        padding: 1rem 0;
+    }
+
+    .gallery img, 
+    .gallery video,
+    .gallery-more img, 
+    .gallery-more video {
+        width: 100%;
+        height: auto;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+        transition: transform 0.3s;
+        cursor: pointer;
+    }
+
+    .gallery img:hover {
+        transform: translateY(-5px);
+    }
+
+    .more-btn {
+        display: block;
+        margin: 1rem auto;
+        padding: 1rem 3rem;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: transform 0.3s;
+    }
+
+    .more-btn:hover {
+        transform: scale(1.05);
+    }
+
+    .gallery-more {
+        opacity: 0;
+        max-height: 0;
+        overflow: hidden;
+        transition: all 0.5s ease;
+    }
+
+    .gallery-more.active {
+        opacity: 1;
+        max-height: 5000px;
+    }
+
+    .video-gallery {
+        background: rgba(0,0,0,0.2);
+        border-radius: 20px;
+        margin: 4rem auto;
+        padding: 1rem 2rem;
+        max-width: 1400px;
+    }
+
+
+/* 视频展示特殊样式 */
+.video-gallery h2::after {
+    bottom: -0.5rem;  /* 额外上移0.2rem */
+    width: 140px;
+}
+
+/* 建模作品特殊样式 */
+#modeling h2::after {
+    bottom: -0.4rem;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+
+
+    .video-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+    }
+
+    .video-card {
+        background: #1a1a2a;
+        border-radius: 16px;
+        overflow: hidden;
+        transition: transform 0.3s;
+    }
+
+    .video-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .bili-frame {
+        width: 100%;
+        height: 500px;
+        border: none;
+    }
+
+    footer {
+        text-align: center;
+        padding: 2rem;
+        background: rgba(0,0,0,0.8);
+        margin-top: 4rem;
+    }
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.95);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s;
+        z-index: 9999;
+        cursor: zoom-out;
+    }
+
+    .overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .enlarged-img {
+        max-width: 90%;
+        max-height: 90vh;
+        border-radius: 12px;
+        transition: transform 0.3s;
+        transform: scale(0.95);
+    }
+
+    .enlarged-img.active {
+        transform: scale(1);
+    }
+
+    @media (max-width: 768px) {
+        header {
+        padding: 3rem 1rem 1rem;
+    }
+
+nav ul {
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        h1 {
+            font-size: 2rem;
+margin: 0.5rem 0;
+        }
+        
+        .gallery, .gallery-more,
+        .video-grid {
+            grid-template-columns: 1fr;
+        }
+        
+        .bili-frame {
+            height: 300px;
+        }
+h2 {
+        margin: 1.5rem 0 0.5rem;
+        font-size: 1.8rem;
+    }
+    }
+
+
+
+/* 视频展示区标题 */
+.video-gallery h2.gallery-title {
+    margin: 0 1 2rem 0;
+    padding: 0 2rem 1.5rem;
+    position: relative;
+}
+
+.video-gallery h2.gallery-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0.8rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    border-radius: 2px;
+}
+
+
+
+header p[align="center"] {
+    font-size: 1.3em;          /* 调整为2倍于父元素字号 */
+    margin: 1rem 0;          /* 上下边距 */
+    letter-spacing: 2px;     /* 字间距 */
+    
+    }
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+    header p[align="center"] {
+        font-size: 1.6em;
+    }
+}
+
+
+    </style>
 </head>
 <body>
     <nav>
         <ul>
-            <li><a href="#uescene">UE地编</a></li>
-            <li><a href="#modeling">建模</a></li>
-            <li><a href="#houdini">Houdini</a></li>
-            <li><a href="#rendering">UE渲染</a></li>
+            <li><a href="#uescene"><i class="fas fa-dungeon"></i> Unreal</a></li>
+            <li><a href="#modeling"><i class="fas fa-cube"></i> Modeling</a></li>
+            <li><a href="#houdini"><i class="fas fa-magic"></i> Houdini</a></li>
+            <li><a href="#rendering"><i class="fas fa-paint-brush"></i> Rendering</a></li>
+            <li><a href="#tools"><i class="fas fa-tools"></i> Tools</a></li>
         </ul>
     </nav>
 
     <header>
         <h1>TECHNICAL ART PORTFOLIO</h1>
+        <p align="center">无限进步</p>
     </header>
 
     <!-- UE地编场景 -->
     <section id="uescene" class="portfolio-section">
         <h2>Unreal Engine 地编场景</h2>
-
-        <div class="gallery">
-            <img src="assets/uescene/魔幻.webp" alt="魔幻场景" />
-	</div>
-
-	<div class="gallery">
-            <img src="assets/uescene/机甲.webp" alt="机甲布局" />
-	<img src="assets/uescene/Angel.webp" alt="Angel" />  
-                <img src="assets/uescene/卡通城堡.webp" alt="卡通城堡" loading="lazy"/>         
-
-        	</div>
-
         
-        <div class="gallery-more">
-	  <img data-src="assets/uescene/村庄03.webp" alt="村庄03" />
-	<img data-src="assets/uescene/村庄02.webp" alt="村庄02" />   
-	<img data-src="assets/uescene/村庄01.webp" alt="村庄01" /> 
-
-
-           <img data-src="assets/uescene/村庄04.webp" alt="村庄04" loading="lazy"/>
-            <img data-src="assets/uescene/村庄00.webp" alt="村庄00" loading="lazy"/>
-	<img data-src="assets/uescene/末日1.webp" alt="末日1" loading="lazy"/>
-
-            <img data-src="assets/uescene/末日2.webp" alt="末日2" loading="lazy"/>
-	<img data-src="assets/uescene/末日3.webp" alt="末日3" loading="lazy"/>
-            <img data-src="assets/uescene/末日4.webp" alt="末日4" loading="lazy"/>
-
+        <div class="gallery">
+            <img src="assets/uescene/魔幻.webp" alt="魔幻场景">
         </div>
 
+        <div class="gallery">
+            <img src="assets/uescene/机甲.webp" alt="机甲布局">
+            <img src="assets/uescene/Angel.webp" alt="Angel">  
+            <img src="assets/uescene/卡通城堡.webp" alt="卡通城堡" loading="lazy">         
+        </div>
 
+        <div class="gallery-more">
+            <img data-src="assets/uescene/村庄03.webp" alt="村庄03">
+            <img data-src="assets/uescene/村庄02.webp" alt="村庄02">   
+            <img data-src="assets/uescene/村庄01.webp" alt="村庄01"> 
+            <img data-src="assets/uescene/村庄04.webp" alt="村庄04" loading="lazy">
+            <img data-src="assets/uescene/村庄00.webp" alt="村庄00" loading="lazy">
+            <img data-src="assets/uescene/末日1.webp" alt="末日1" loading="lazy">
+            <img data-src="assets/uescene/末日2.webp" alt="末日2" loading="lazy">
+            <img data-src="assets/uescene/末日3.webp" alt="末日3" loading="lazy">
+            <img data-src="assets/uescene/末日4.webp" alt="末日4" loading="lazy">
+        </div>
         <button class="more-btn" data-target="uescene">More</button>
     </section>
 
-<div style="width: 100%; max-width: 800px; margin: 0 auto;">
 
-  <iframe 
-      src="https://player.bilibili.com/player.html?bvid=BV1Ez9GYVEoF&page=1&high_quality=1&autoplay=0" 
-      width="100%" 
-      height="500" 
-      frameborder="no" 
-      allowfullscreen>
-  </iframe>
 
-</div>
+
+   <!-- 视频展示 -->
+<section class="video-gallery">
+    <h2 class="gallery-title">
+        
+        Video Exhibition
+        
+    </h2>
+
+    <!-- 默认显示前两个视频 -->
+    <div class="video-grid">
+        <div class="video-card">
+            <iframe src="https://player.bilibili.com/player.html?bvid=BV18cXXYBEdv&autoplay=0" 
+                    class="bili-frame"></iframe>     
+        </div>
+        <div class="video-card">
+            <iframe src="https://player.bilibili.com/player.html?bvid=BV1Ez9GYVEoF&autoplay=0" 
+                    class="bili-frame"></iframe>
+        </div>
+    </div>
+
+    <!-- More内容区 -->
+    <div class="video-gallery-more">
+        <div class="video-card">
+            <iframe data-src="https://player.bilibili.com/player.html?bvid=BV14QXRY3E4N&autoplay=0" 
+                    class="bili-frame"></iframe>
+        </div>
+        <div class="video-card">
+            <iframe data-src="https://player.bilibili.com/player.html?bvid=BV1tQXRY3ETf&autoplay=0" 
+                    class="bili-frame"></iframe>      
+        </div>
+    </div>
+    
+    <button class="more-btn video-more-btn">More</button>
+</section>
+
+<style>
+/* 新增视频More区块样式 */
+.video-gallery-more {
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    display: grid;
+    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.video-gallery-more.active {
+    max-height: 1000px;
+    opacity: 1;
+    margin-top: 2rem;
+}
+
+/* 调整视频卡片间距 */
+.video-card {
+    margin-bottom: 1rem;
+}
+
+.video-more-btn {
+    margin-top: 1.5rem;
+    display: block;
+    width: 200px;
+}
+</style>
+
+
+
 
 
     <!-- 建模展示 -->
     <section id="modeling" class="portfolio-section">
-        <h2>3D建模作品</h2>
+        <h2>Models</h2>
         <div class="gallery">
-            <img src="assets/modeling/Gun2.webp" alt="Gun" />
-            <img src="assets/modeling/Gun2.webp" alt="武器模型" /">
+            <img src="https://i.imgur.com/XRVmr7B.jpg" alt="武器模型">
+            <img src="https://media.fab.com/image_previews/gallery_images/faec67f8-2b3f-4440-a69a-d87afcfd1c01/fecaf06e-e555-4dd0-a8d3-a0285dc47ad8.jpg" 
+                 alt="机械模型" loading="lazy">
         </div>
         <div class="gallery-more">
-            <img data-src="assets/modeling/kc0.webp" alt="道具模型" loading="lazy">
+            <img data-src="assets/modeling/kc0.png" alt="道具模型" loading="lazy">
         </div>
         <button class="more-btn" data-target="modeling">More</button>
     </section>
 
     <!-- Houdini -->
     <section id="houdini" class="portfolio-section">
-        <h2>Houdini</h2>
-     
-
-<div style="width: 100%; max-width: 800px; margin: 0 auto;">
-  <iframe 
-      src="https://player.bilibili.com/player.html?bvid=BV1ph9GYUEru&page=1&high_quality=1&autoplay=0" 
-      width="100%" 
-      height="500" 
-      frameborder="no" 
-      allowfullscreen>
-  </iframe>
-</div>
- <h3 align = "center"> 海浪模拟 </h3>
-
-
-        <div class="gallery-more">
-            <video controls>
-                <source src="assets/houdini/海浪.mp4" type="video/mp4">
-            </video>
+        <h2>Houdini </h2>
+        <div class="gallery">
+            <iframe src="https://player.bilibili.com/player.html?bvid=BV1ph9GYUEru&autoplay=0" 
+                    class="bili-frame"></iframe>
         </div>
-        <button class="more-btn" data-target="houdini">More</button>
+        <h3 style="text-align:center; color:#7fd1ff;">海浪模拟系统</h3>
     </section>
 
-    <!-- UE渲染 -->
+    <!-- 渲染技术 -->
     <section id="rendering" class="portfolio-section">
-        <h2>Unreal Engine 渲染技术</h2>
+        <h2>Rendering</h2>
         <div class="gallery">
-            <img src="assets/rendering/lighting.jpg" alt="动态光照" loading="lazy">
+            <iframe src="https://player.bilibili.com/player.html?bvid=BV13yACeCEBZ&autoplay=0" 
+                    class="bili-frame"></iframe>
         </div>
-        <div class="gallery-more">
-            <video controls>
-                <source src="assets/rendering/material-demo.mp4" type="video/mp4">
-            </video>
-        </div>
-        <button class="more-btn" data-target="rendering">More</button>
     </section>
 
     <footer>
         <p>© 2025 Technical Artist. Hosted on GitHub Pages.</p>
     </footer>
 
-    
+    <script>
+    // More按钮功能
+    document.querySelectorAll('.more-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const target = document.getElementById(this.dataset.target);
+            const galleryMore = target.querySelector('.gallery-more');
+            const isActive = galleryMore.classList.contains('active');
 
- <script>
-        document.querySelectorAll('.more-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                const moreSection = this.previousElementSibling;
-                const isActive = moreSection.classList.contains('active');
-                
-                // 切换状态
-                moreSection.classList.toggle('active');
-                this.textContent = isActive ? 'More' : 'Less';
-                
-                // 懒加载
-                if (!isActive) {
-                    const lazyImages = moreSection.querySelectorAll('img[data-src]');
-                    lazyImages.forEach(img => {
-                        img.src = img.dataset.src;
-                        img.removeAttribute('data-src');
-                    });
-                }
-            });
+            // 强制布局重绘
+            galleryMore.style.display = 'grid';
+            void galleryMore.offsetWidth; // 触发重绘
+            galleryMore.style.display = '';
 
- });
+            galleryMore.classList.toggle('active');
+            this.textContent = isActive ? 'More ▲' : 'Less ▼';
+
+            // 懒加载处理
+            if (!isActive) {
+                galleryMore.querySelectorAll('img[data-src]').forEach(img => {
+                    img.src = img.dataset.src;
+                    img.onload = () => {
+                        galleryMore.style.display = 'grid';
+                        void galleryMore.offsetWidth;
+                        galleryMore.style.display = '';
+                    }
+                    img.removeAttribute('data-src');
+                });
+            }
+        });
+    });
+
+    // 图片放大功能
+    document.addEventListener('click', e => {
+        if (e.target.matches('.gallery img, .gallery-more img')) {
+            const overlay = document.createElement('div');
+            overlay.className = 'overlay';
+            
+            const img = new Image();
+            img.src = e.target.src;
+            img.className = 'enlarged-img';
+            
+            overlay.appendChild(img);
+            document.body.appendChild(overlay);
+            
+            setTimeout(() => {
+                overlay.classList.add('active');
+                img.classList.add('active');
+            }, 10);
+        }
+
+        if (e.target.matches('.overlay')) {
+            e.target.classList.remove('active');
+            setTimeout(() => e.target.remove(), 300);
+        }
+    });
+
+    // ESC关闭
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            const overlay = document.querySelector('.overlay');
+            if (overlay) {
+                overlay.classList.remove('active');
+                setTimeout(() => overlay.remove(), 300);
+            }
+        }
+    });
     </script>
 
+
+<script>
+// 视频More按钮功能
+document.querySelector('.video-more-btn').addEventListener('click', function() {
+    const moreSection = this.previousElementSibling;
+    const isActive = moreSection.classList.contains('active');
+    
+    // 切换状态
+    moreSection.classList.toggle('active');
+    this.textContent = isActive ? 'More ▲' : 'Less ▼';
+
+    // 延迟加载iframe
+    if (!isActive) {
+        moreSection.querySelectorAll('iframe[data-src]').forEach(iframe => {
+            iframe.src = iframe.dataset.src;
+            iframe.removeAttribute('data-src');
+        });
+    }
+});
+</script>
 
 </body>
 </html>
